@@ -1,4 +1,4 @@
-## 2252
+# ## 2252
 # import sys
 # from collections import deque
 # from collections import defaultdict
@@ -18,7 +18,7 @@
 # for i in range(1,N+1):
 #     if node[i] == 0:
 #         queue.append(i)
-
+# # print(queue)
 # while queue:
 #     student = queue.popleft()
 #     answer.append(student)
@@ -132,59 +132,91 @@
 # print(*answer)
 
 ## 3665
-import sys
-from collections import deque, defaultdict
+# import sys
+# from collections import deque, defaultdict
 
-input  =  sys.stdin.readline
+# input  =  sys.stdin.readline
 
-for _ in range(int(input())):
-    N =  int(input())
-    order =  list(map(int,input().split()))
+# for _ in range(int(input())):
+#     N =  int(input())
+#     order =  list(map(int,input().split()))
     
-    graph =  defaultdict(list)
-    node = [0] * (N+1)
+#     graph =  defaultdict(list)
+#     node = [0] * (N+1)
 
-    for i in range(N-1):
-        for j in range(i+1,N):
-            graph[order[i]].append(order[j])
-            node[order[j]] += 1
+#     for i in range(N-1):
+#         for j in range(i+1,N):
+#             graph[order[i]].append(order[j])
+#             node[order[j]] += 1
     
-    for __ in range(int(input())):
-        i, j = map(int, input().split())
-        if i not in graph[j]:
-            tmp = i
-            i =j
-            j = tmp
-        graph[j].remove(i)
-        graph[i].append(j)
-        node[i] -= 1
-        node[j] += 1
+#     for __ in range(int(input())):
+#         i, j = map(int, input().split())
+#         if i not in graph[j]:
+#             tmp = i
+#             i =j
+#             j = tmp
+#         graph[j].remove(i)
+#         graph[i].append(j)
+#         node[i] -= 1
+#         node[j] += 1
         
 
-    queue = deque()
-    cnt = 0
+#     queue = deque()
+#     cnt = 0
 
+#     for i in range(1,N+1):
+#         if node[i] == 0:
+#             queue.append(i)
+#             cnt += 1
+    
+    
+#     answer=[]
+#     # if cnt > 1:
+#     #     print("?")
+#     # elif cnt == 0:
+#     #     print("IMPOSSIBLE")
+#     # else:
+#     while queue:
+#         now = queue.popleft()
+#         answer.append(now)
+#         for  i in graph[now]:
+#             node[i] -= 1
+#             if node[i] ==0 :
+#                 queue.append(i)
+#     if len(answer) != N:
+#         print("IMPOSSIBLE")
+#     else:
+#         print(*answer)
+
+## 1005
+from collections import defaultdict, deque
+import sys
+input  = sys.stdin.readline
+
+for _ in range(int(input())):
+    graph = defaultdict(list)
+    
+    N, M = map(int,input().split())
+    node = [0]*(N+1)
+    time = [0]
+    time= time+list(map(int,input().split()))
+    duration = [0]*(N+1)
+    for _ in range(M):
+        before, after = map(int, input().split())
+        graph[before].append(after)
+        node[after] += 1
+    queue = deque()
     for i in range(1,N+1):
         if node[i] == 0:
             queue.append(i)
-            cnt += 1
+            duration[i] = time[i]
     
-    
-    answer=[]
-    # if cnt > 1:
-    #     print("?")
-    # elif cnt == 0:
-    #     print("IMPOSSIBLE")
-    # else:
     while queue:
-        now = queue.popleft()
-        answer.append(now)
-        for  i in graph[now]:
-            node[i] -= 1
-            if node[i] ==0 :
-                queue.append(i)
-    if len(answer) != N:
-        print("IMPOSSIBLE")
-    else:
-        print(*answer)
-
+        building = queue.popleft()
+        for next_building in graph[building]:
+            node[next_building] -= 1
+            duration[next_building] = max(duration[building]+time[next_building], duration[next_building])
+            if node[next_building] == 0:
+                queue.append(next_building)
+    answer = int(input())
+    print(duration[answer])
