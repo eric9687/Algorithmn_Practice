@@ -98,20 +98,40 @@
 # import sys
 # input = sys.stdin.readline
 
-# N= int(input())
-# B = [0] + list(map(int,input().split()))
-# stack = [(1,B[1])]
-# Arr = [0]*(N+1)
-# for i in range(2,N+1):
-#     while stack:
-#         if stack[-1][1] < B[i]:
-#             Arr[stack[-1][0]] = i
-#             stack.pop()
-#         else:
-#             break
-#     stack.append((i,B[i])) 
-        
-# print(Arr)
+# N = int(input())
+# B = list(map(int,input().split()))
+
+# cnt = [0]* (N)
+# nearest = [-1] * N
+
+# # 오른쪽으로 가면서 왼쪽으로 보이는 건물의 수와 가장 가까운 건물을 찾기
+# stack = []
+# for i in range(N):
+#     while stack and B[stack[-1]] <= B[i] :
+#         stack.pop()
+#     cnt[i] += len(stack)
+#     if stack:
+#         nearest[i] = stack[-1]
+#     stack.append(i)
+
+# # 왼쪽으로 가며....
+# stack = []
+# for i in reversed(range(N)):
+#     while stack and B[stack[-1]] <= B[i]:
+#         stack.pop()
+#     cnt[i] += len(stack)
+#     if stack and (nearest[i] == -1 or abs(i-nearest[i]) > abs(stack[-1] -i )):
+#         nearest[i] = stack[-1]
+#     stack.append(i)
+    
+# for i in range(N):
+#     if cnt[i] == 0:
+#         print(0)
+#     else:
+#         print(cnt[i], nearest[i]+1)
+
+
+
 
 
 
@@ -138,27 +158,27 @@
 #         print('NP') 
 
 ## 6549
-import sys
-input = sys.stdin.readline
+# import sys
+# input = sys.stdin.readline
 
-while True:
-    N, *H = list(map(int, input().split()))+[0]
-    if N ==0:
-        break
-    stack = []
-    i = 0
-    ans = 0
-    while i < N+1:
-        if not stack or H[stack[-1]] <= H[i]:
-            stack.append(i)
-            i += 1
-        else:
-            height = H[stack.pop()]
-            if stack:
-                ans = max(ans, height * (i - stack[-1]-1))
-            else:
-                ans = max(ans, height * i)
-    print(ans)
+# while True:
+#     N, *H = list(map(int, input().split()))+[0]
+#     if N ==0:
+#         break
+#     stack = []
+#     i = 0
+#     ans = 0
+#     while i < N+1:
+#         if not stack or H[stack[-1]] <= H[i]:
+#             stack.append(i)
+#             i += 1
+#         else:
+#             height = H[stack.pop()]
+#             if stack:
+#                 ans = max(ans, height * (i - stack[-1]-1))
+#             else:
+#                 ans = max(ans, height * i)
+#     print(ans)
     
         
             
