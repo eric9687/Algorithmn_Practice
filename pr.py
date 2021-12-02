@@ -1,4 +1,6 @@
-import heapq
-A = [-1,8,-3,-3,3,5,6]
+def hh(a):
+    if a==1: return True
 
-print(set(A))
+print(hh(2))
+if hh(2):
+    aprint("*")
