@@ -152,46 +152,74 @@
 
 
 ## 16724
+# import sys
+# sys.setrecursionlimit(10**9)
+# input = sys.stdin.readline
+
+# N, M = map(int,input().split())
+# direction = []
+# G = [i for i in range(N*M)]
+
+# def Find(x):
+#     if x == G[x]: return x
+#     G[x] = Find(G[x])
+#     return G[x]
+
+# def Union(a,b):
+#     a = Find(a)
+#     b = Find(b)
+#     if a == b: return
+#     G[b] = a
+    
+# for _ in range(N):
+#     st = input().rstrip()
+#     for ch in st:
+#         direction.append(ch)
+
+    
+# for i in range(N):
+#     for j in range(M):
+        
+#         if direction[i*M + j] == 'D':
+#             Union(i*M + j, M*(i+1) + j)
+#         elif direction[i*M + j] == 'U':
+#             Union(i*M + j, M*(i-1) + j)
+#         elif direction[i*M + j] == 'L':
+#             Union(i*M + j , M*i + j -1)
+#         else: Union(i*M + j , M*i + j +1)
+    
+# cnt = 0
+# for i in range(N*M):
+#     if G[i] == i: cnt += 1
+# print(cnt)
+    
+    
+## 10775
 import sys
 sys.setrecursionlimit(10**9)
 input = sys.stdin.readline
 
-N, M = map(int,input().split())
-G = [i for i in range(N*M)]
-mapping = [list(input().strip()) for _ in range(N)]
-
-directions = {'U':(0,-1),'D':(0,1),'L':(-1,0),'R':(1,0)}
-
-
+G = int(input())
+P = int(input())
+flight = []
+for _ in range(P):
+    flight.append(int(input()))
+parent = [i for i in range(G+1)]
 
 def Find(x):
-    if x == G[x]: return x
-    G[x] = Find(G[x])
-    return G[x]
+    if x == parent[x]: return x
+    parent[x] = Find(parent[x])
+    return parent[x]
 
 def Union(a,b):
     a = Find(a)
     b = Find(b)
-    if a == b: return
-    if a > b:
-        G[a] = b
-    else: G[b] = a
+    parent[a] = b
     
-
-for i in range(N*M):
-    x = i%M 
-    y = i//M
-    cur = mapping[y][x]
-    nx = x + directions[cur][0]
-    ny = y + directions[cur][1]
-    next_num = ny*M + nx
-    Union(i,next_num)
-
 cnt = 0
-inssa = []
-for i in range(N*M):
-    if Find(i) not in inssa:
-        inssa.append(Find(i))
-        cnt+=1
+for i in flight:
+    if Find(i) == 0:
+        break
+    Union(Find(i), Find(i)-1)
+    cnt += 1
 print(cnt)
-    

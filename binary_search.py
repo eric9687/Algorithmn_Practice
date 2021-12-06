@@ -1,142 +1,124 @@
-# n = int(input())
-# l, r = 0, n
-
-# while l <= r:
-#     m = (l+r)//2
-#     if m**2 < n:
-#         l = m + 1
-#     else:
-#         r = m-1
-# if m**2 >= n:
-#     print(m)
-# else:
-#     print(m+1)
-
-
-
-####1654
-# import sys
-# K, N = map(int, input().split())
-# lan =  [int(sys.stdin.readline()) for _ in range(K)]
-# start, end = 1, max(lan)
-
-# while start <= end:
-#     mid = (start + end )//2
-#     lines = 0
-#     for l in lan:
-#         lines += l // mid
-    
-#     if lines >= N:
-#         start = mid +1
-#     else:
-#         end = mid -1
-
-# print(end)
-
-import sys
-K, N = map(int, input().split())
-lan =  [int(sys.stdin.readline()) for _ in range(K)]
-lo, hi = 1, max(lan)
-
-while lo +1 < hi:
-    mid = (lo + hi )//2
-    lines = 0
-    for l in lan:
-        lines += l // mid
-    
-    if lines < N:
-        hi = mid
-    else:
-        lo = mid
-
-print(lo)
-
-# # 2805
+## 2805
 # import sys
 # input = sys.stdin.readline
+
 # N, M = map(int, input().split())
-# tree =  list (map(int, input().split()))
+# tree = list(map(int,input().split()))
+# lo, hi = 1, max(tree)
 
-# lo, hi = -1, max(tree)
-
-# while lo +1 < hi:
-#     mid = (lo + hi)//2
-
-#     stick = 0
-#     for tr in tree:
-#         if tr - mid > 0:
-#             stick += tr - mid
+# while lo + 1 < hi:
+#     mid = (lo+hi)//2
+#     stick = 0 
+#     for i in tree:
+#         if i - mid > 0:
+#             stick += i - mid
     
-#     if stick < M : 
-#         hi = mid
+#     if stick < M:
+#         hi = mid 
 #     else:
 #         lo = mid
-
 # print(lo)
 
+## 1654
 
-#2792
-# import sys
-# input = sys.stdin.readline
-# N, M = map(int, input().split())
-# jry =  [int(sys.stdin.readline()) for _ in range(M)]
-
-# lo, hi = -1, max(jry)
+# K,N = map(int, input().split())
+# lan = []
+# for _ in range(K):
+#     lan.append(int(input()))
+# lo, hi = 0, max(lan)+1
 
 # while lo + 1 < hi:
-#     mid = (lo + hi) // 2
-#     jeal = 0
-#     if mid ==0:
-#         print(max(jry))
-#         break
-#     for i in jry:
-#         jeal += i // mid
-#         if i % mid > 0:
-#             jeal += 1
-#     if jeal <= N:
+#     mid = (lo + hi)//2
+#     lines = 0
+#     for l  in lan:
+#         lines += l//mid
+#     if lines < N:
 #         hi = mid
 #     else:
 #         lo = mid
-# if mid != 0:
-#     print(hi)
+# print(lo)
 
-
-# import sys
-# input = sys.stdin.readline
-# M,N = map(int, input().split())
-# t =  [int(sys.stdin.readline()) for _ in range(M)]
-
-# lo, hi = 0, max(t)*N
+## 2417
+# n = int(input())
+# lo, hi = 0 , n
 
 # while lo + 1 < hi:
-#     mid = (lo + hi) // 2
-#     people = 0
-#     for i in t:
-#         people += mid// i
-        
-#     if people >= N:
+#     mid = (lo+hi)//2
+#     if mid**2 >= n:
 #         hi = mid
 #     else:
-        
 #         lo = mid
-
 # print(hi)
 
-
+## 2792
 # import sys
 # input = sys.stdin.readline
-# N, C = map(int, input().split())
-# x =  [int(sys.stdin.readline()) for _ in range(N)]
-# lo, hi = 1, max(x) - C +1
+
+# N,M =map(int,input().split())
+# jwy = []
+# for _ in range(M):
+#     jwy.append(int(input()))
+# lo, hi  = 1, max(jwy)
 
 # while lo + 1 < hi:
-#     mid = (lo + hi) // 2
-#     wifi = 0
-#     for xx in x:
-#         wifi += mid // xx
-#     if wifi < N:
+#     mid  = (lo+hi)//2
+#     total = 0    ## 학생수!!
+#     for i in jwy:
+#         st = i//mid if i%mid == 0 else i//mid + 1
+#         total  += st
+#     if total <= N :
 #         hi = mid
 #     else:
 #         lo = mid
+# print(hi)
+    
+    
+## 2110
+import sys
+input = sys.stdin.readline
+N, C = map(int, input().split())
+house = []
+for _ in range(N):
+    house.append(int(input()))
+house = sorted(house)
+lo, hi = 1, house[-1]-house[0]
 
-# print(lo)
+while lo + 1 < hi:
+    mid = (lo + hi)//2
+    
+    cnt= 1
+    cur_house = house[0]
+    for i in range(1,N):
+        if house[i] - cur_house >= mid:
+            cnt += 1
+            cur_house = house[i]
+            
+    if cnt < C:
+        hi = mid
+    else:
+        lo = mid+1
+print(lo)
+
+## 10816
+# import sys
+# input = sys.stdin.readline
+
+# N = int(input())
+# card = list(map(int,input().split()))
+# M = int(input())
+# num = list(map(int,input().split()))
+# dic = {}
+# for c in card:
+#     try:
+#         dic[c] +=1
+#     except:
+#         dic[c] = 1
+# result = []
+
+# for nn in num:
+#     try:
+#         result.append(str(dic[nn]))
+#     except:
+#         result.append(str(0))
+
+# print(' '.join(result))
