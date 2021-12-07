@@ -81,7 +81,7 @@ house = []
 for _ in range(N):
     house.append(int(input()))
 house = sorted(house)
-lo, hi = 1, house[-1]-house[0]
+lo, hi = 1, 10**9+7   ### TTTTTFFFFF  lo와 hi는 무조건 T,F인 아이들로!!!
 
 while lo + 1 < hi:
     mid = (lo + hi)//2
@@ -96,7 +96,8 @@ while lo + 1 < hi:
     if cnt < C:
         hi = mid
     else:
-        lo = mid+1
+        lo = mid
+        
 print(lo)
 
 ## 10816

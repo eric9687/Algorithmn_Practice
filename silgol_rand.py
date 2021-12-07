@@ -7,23 +7,32 @@
 
 # for _ in range(T):
 #     N, M, K = map(int, input().split())
-#     count = 0
+#     cnt = 0
 #     money = list(map(int, input().split()))
-#     total =sum(money)
+#     if N == M:
+#         if sum(money)<K:
+#             print(1)
+#         else:
+#             print(0)
+#     else:
+#         money = money + money[:M-1]
+#         steal = sum(money[:M])
+#         before = 0
+#         if steal < K:
+#             cnt += 1
+#         for i in range(M,N+M-1):
+#             steal = steal - money[before] + money[i]
+#             if steal < K:
+#                 cnt+= 1
+#             before += 1
+#         print(cnt)
+    
 
 
-    # if total < K: count +=1
-
-    # if N != M:
-    #     for i in range(N):
-    #         total -= money[i]
-    #         next_house = i + M
-    #         if next_house >= N:
-    #             next_house -= N
-    #         if total < K: count +=1
+    
 
 
-    # print(count)
+#     print(count)
 
 
     
