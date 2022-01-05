@@ -303,41 +303,41 @@ result_b = []
 #     else: print(dist[i])
 
 ## 11779 
-import sys
-from heapq import *
-input = sys.stdin.readline
+# import sys
+# from heapq import *
+# input = sys.stdin.readline
 
-def dijkstra(s):
-    heap = []
-    dist[s] = 0
-    heappush(heap, (0,s))
+# def dijkstra(s):
+#     heap = []
+#     dist[s] = 0
+#     heappush(heap, (0,s))
     
-    while heap:
-        w, v = heappop(heap)
+#     while heap:
+#         w, v = heappop(heap)
         
-        if dist[v] != w: continue
-        for vv, ww in graph[v]:
-            if dist[vv] > w +ww:
-                dist[vv] = w+ww
-                heappush(heap,(dist[vv],vv))
-                route[v] = vv
+#         if dist[v] != w: continue
+#         for vv, ww in graph[v]:
+#             if dist[vv] > w +ww:
+#                 dist[vv] = w+ww
+#                 heappush(heap,(dist[vv],vv))
+#                 route[v] = vv
 
-n = int(input())
-m = int(input())
+# n = int(input())
+# m = int(input())
 
-INF = int(1e9+7)
-graph = [[] for _ in range(n+1)]
-dist = [INF] * (n+1)
-route = [[0] for _ in range(n+1)]
-for _ in range(m):
-    a,b,c = map(int, input().split())
-    graph[a].append((b,c))
+# INF = int(1e9+7)
+# graph = [[] for _ in range(n+1)]
+# dist = [INF] * (n+1)
+# route = [[0] for _ in range(n+1)]
+# for _ in range(m):
+#     a,b,c = map(int, input().split())
+#     graph[a].append((b,c))
 
-start, end = map(int, input().split())
-dijkstra(start)
+# start, end = map(int, input().split())
+# dijkstra(start)
 
-print(dist[end])
-print
+# print(dist[end])
+# print
 
 
 # ## 11657 Floyd
@@ -448,3 +448,140 @@ print
     
 
 ## 1967 radius of tree
+
+
+## 1260
+# import sys
+# input = sys.stdin.readline
+# from collections import deque
+
+
+# N, M, V = map(int,input().split())
+# graph = [[0]*(N+1) for _ in range(N+1)]
+# for _ in range(M):
+#     a,b = map(int,input().split())
+#     graph[a][b] = 1
+#     graph[b][a] = 1
+
+# visited_d = [0] *(N+1)
+# visited_b = [0] * (N+1)
+
+# def dfs(s):
+#     visited_d[s] = 1
+#     print(s, end=' ')
+#     for i in range(1,N+1):
+#         if visited_d[i] == 0 and graph[s][i]==1:
+#             dfs(i)
+
+# def bfs(s):
+#     visited_b[s] = 1
+#     queue = deque()
+#     queue.append(s)
+    
+#     while queue:
+#         q = queue.popleft()
+#         print(q, end=' ')
+#         for i in range(1,N+1):
+#             if visited_b[i] == 0 and graph[q][i]==1:
+#                 visited_b[i] = 1
+#                 queue.append(i)
+                
+# dfs(V)
+# bfs(V)
+
+
+
+## 11404
+# import sys
+# input = sys.stdin.readline
+# INF = sys.maxsize
+
+# n = int(input())
+# m = int(input())
+# graph = [[INF]*(n+1) for _ in range(n+1)]
+# for _ in range(m):
+#     a, b ,c = map(int, input().split())
+#     if graph[a][b] > c:
+#         graph[a][b] = c
+        
+# for k in range(1,n+1):
+#     for i in range(1,n+1):
+#         for j in range(1,n+1):
+#             if i != j:
+#                 if graph[i][k] + graph[k][j] < graph[i][j]:
+#                     graph[i][j] = graph[i][k] + graph[k][j]
+
+# for i in range(1,n+1):
+#     for j in range(1,n+1):
+#         print(0 if graph[i][j] == INF else graph[i][j],end=' ')
+#     print()
+        
+        
+## 11779
+
+# import sys
+# input = sys.stdin.readline
+# from heapq import *
+# INF = sys.maxsize
+
+# n = int(input())
+# m = int(input())
+
+# graph = [[] for _ in range(n+1)]
+# dist = [INF] * (n+1)
+# trace = [0]*(n+1)
+# for _ in range(m):
+#     a, b, c = map(int, input().split())
+#     graph[a].append((b,c))
+
+# def dijkstra(s):
+#     heap = []
+#     heappush(heap,(0,s))
+#     dist[s] = 0
+    
+#     while heap:
+#         w,v  = heappop(heap)
+        
+#         if dist[v] != w: continue
+#         for vv, ww in graph[v]:
+#             if dist[vv] > ww + w:
+#                 dist[vv] = ww + w
+#                 heappush(heap,(dist[vv],vv))
+    
+# st, en = map(int,input().split())
+# dijkstra(st)
+# print(dist[en])
+
+
+## 11657
+import sys
+input = sys.stdin.readline
+INF = sys.maxsize
+
+
+N, M = map(int,input().split())
+graph = [[] for _ in range(N+1)]
+dist = [INF] * (N+1)
+is_possible = True
+for _ in range(M):
+    a,b,c = map(int,input().split())
+    graph[a].append((b,c))
+
+def BellmanFord(s):
+    global is_possible
+    dist[s] = 0
+    
+    for repeat in range(1,N+1):
+        for i in range(1, N+1):
+            for v, w in graph[i]:
+                if dist[v] > dist[i] + w:
+                    dist[v] = dist[i] + w
+                    if repeat == N:
+                        is_possible = False
+BellmanFord(1)
+if is_possible:
+    for d in dist[2:]:
+        print(d if d != INF else -1)
+else:
+    print(-1)
+    
